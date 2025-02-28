@@ -1080,7 +1080,7 @@ compressed_batch_set_compressed_tuple(DecompressContext *dcontext,
 				Assert(column_values->decompression_type != DT_NoData);
 
 				/* FIXME */
-				//				compressed_batch_decompress_column(column_values);
+				compressed_batch_decompress_column(column_values);
 			}
 		}
 
