@@ -208,7 +208,7 @@ FUNCTION_NAME(fill_offsets_impl)(BatchHashingParams params, int start_row, int e
 										DT_ArrowTextDict)                                          \
 	APPLY_FOR_SCALARS(X,                                                                           \
 					  NAME##_multi,                                                                \
-					  (COND) && params.single_grouping_column.decompression_type == DT_Invalid)
+					  (COND) && params.single_grouping_column.decompression_type == DT_NoData)
 
 #define APPLY_FOR_SPECIALIZATIONS(X) APPLY_FOR_TYPE(X, index, true)
 
@@ -237,7 +237,7 @@ FUNCTION_NAME(dispatch_for_params)(BatchHashingParams params, int start_row, int
 	}
 
 	if ((params.num_grouping_columns == 1) !=
-		(params.single_grouping_column.decompression_type != DT_Invalid))
+		(params.single_grouping_column.decompression_type != DT_NoData))
 	{
 		pg_unreachable();
 	}

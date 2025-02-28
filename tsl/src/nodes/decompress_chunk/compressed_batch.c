@@ -1069,9 +1069,8 @@ compressed_batch_set_compressed_tuple(DecompressContext *dcontext,
 				compressed_column_fetch_compressed_data(dcontext, batch_state, compressed_slot, i);
 				Assert(column_values->decompression_type != DT_NoData);
 
-				//				batch_decompress_columncompressed_column_decompress(dcontext, batch_state,
-				//i); 				Assert(column_values->decompression_type != DT_NoData);
-				//				Assert(column_values->decompression_type != DT_Pending);
+				/* FIXME */
+				//compressed_batch_decompress_column(column_values);
 			}
 		}
 
