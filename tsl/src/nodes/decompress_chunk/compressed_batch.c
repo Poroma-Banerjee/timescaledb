@@ -394,8 +394,18 @@ compressed_batch_get_arrow_array(VectorQualState *vqstate, Expr *expr, bool *is_
 												batch_state,
 												compressed_slot,
 												column_index);
-		compressed_batch_decompress_column(column_values);
 		Assert(column_values->decompression_type != DT_NoData);
+	}
+
+	if (column_values->decompression_type == DT_Pending)
+	{
+		/*
+		 * Might see pending column as an argument when this is called for
+		 * vectorized aggregate FILTER clause, hence this block is separate from
+		 * the above one.
+		 */
+		compressed_batch_decompress_column(column_values);
+		Assert(column_values->decompression_type != DT_Pending);
 	}
 
 	Assert(column_values->decompression_type != DT_Iterator);
@@ -1070,7 +1080,7 @@ compressed_batch_set_compressed_tuple(DecompressContext *dcontext,
 				Assert(column_values->decompression_type != DT_NoData);
 
 				/* FIXME */
-				//compressed_batch_decompress_column(column_values);
+				//				compressed_batch_decompress_column(column_values);
 			}
 		}
 
